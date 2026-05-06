@@ -1,0 +1,97 @@
+.sidebar {
+    width: 300px;
+    background: #fff;
+    border-right: 2px solid #e0e0e0;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.sidebar-add-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #ff9800;
+    background: white;
+    color: #ff9800;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.sidebar-add-btn:hover {
+    background: #ff9800;
+    color: white;
+}
+
+.sidebar-input-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.sidebar-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.sidebar-input:focus {
+    outline: none;
+    border-color: #ff9800;
+    box-shadow: 0 0 4px rgba(255, 152, 0, 0.2);
+}
+
+.sidebar-confirm-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ddd;
+    background: #ff9800;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.sidebar-confirm-btn:hover {
+    background: #f57c00;
+}
+
+.sidebar-tasks {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-empty {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    margin: 20px 0;
+    font-size: 14px;
+}
