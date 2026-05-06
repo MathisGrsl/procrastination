@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Task as TaskType } from '../../types/index';
+import React, {useState} from 'react';
+import {Task as TaskType} from '../../types/index';
 import Task from '../Task/Task';
 import './Day.css';
 
@@ -13,6 +13,7 @@ interface DayProps {
     onDeleteTask: (taskId: string) => void;
     onUpdateTask: (taskId: string, updates: Partial<TaskType>) => void;
     onDropTask: (taskId: string, dayIndex: number) => void;
+    onDropToNavbar: (taskId: string) => void;
 }
 
 const Day: React.FC<DayProps> = ({
@@ -25,6 +26,7 @@ const Day: React.FC<DayProps> = ({
     onDeleteTask,
     onUpdateTask,
     onDropTask,
+    onDropToNavbar,
 }) => {
     const [dragOver, setDragOver] = useState(false);
 
@@ -47,8 +49,8 @@ const Day: React.FC<DayProps> = ({
     };
 
     // Statistics for this day
-    const completedCount = tasks.filter(t => t.status === 'finish').length;
-    const inProgressCount = tasks.filter(t => t.status === 'working').length;
+    const completedCount = tasks.filter((t) => t.status === 'finish').length;
+    const inProgressCount = tasks.filter((t) => t.status === 'working').length;
 
     return (
         <section
@@ -95,6 +97,18 @@ const Day: React.FC<DayProps> = ({
                             draggable
                             className="task-wrapper"
                             onDragStart={(e) => {
+                                // Check if drag started from an interactive element
+                                const target = e.target as HTMLElement;
+                                if (
+                                    target.classList.contains('task-status') ||
+                                    target.classList.contains('task-btn') ||
+                                    target.closest('.task-status') ||
+                                    target.closest('.task-btn') ||
+                                    target.closest('.task-details')
+                                ) {
+                                    e.preventDefault();
+                                    return;
+                                }
                                 e.dataTransfer?.setData('taskId', task.id);
                                 e.dataTransfer!.effectAllowed = 'move';
                             }}

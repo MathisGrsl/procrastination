@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Task as TaskType } from '../../types/index';
+import React, {useState} from 'react';
+import {Task as TaskType} from '../../types/index';
 import './Task.css';
 
 interface TaskProps {
@@ -9,7 +9,7 @@ interface TaskProps {
     onUpdate?: (taskId: string, updates: Partial<TaskType>) => void;
 }
 
-const Task: React.FC<TaskProps> = ({ task, onStatusChange, onDelete, onUpdate }) => {
+const Task: React.FC<TaskProps> = ({task, onStatusChange, onDelete, onUpdate}) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const statusColors: Record<TaskType['status'], string> = {
@@ -47,7 +47,7 @@ const Task: React.FC<TaskProps> = ({ task, onStatusChange, onDelete, onUpdate })
     const handleDueDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.stopPropagation();
         if (onUpdate) {
-            onUpdate(task.id, { dueDate: e.target.value || undefined });
+            onUpdate(task.id, {dueDate: e.target.value || undefined});
         }
     };
 
@@ -55,7 +55,7 @@ const Task: React.FC<TaskProps> = ({ task, onStatusChange, onDelete, onUpdate })
         e.stopPropagation();
         const value = e.target.value ? parseInt(e.target.value) : undefined;
         if (onUpdate) {
-            onUpdate(task.id, { estimatedTime: value });
+            onUpdate(task.id, {estimatedTime: value});
         }
     };
 
@@ -65,7 +65,7 @@ const Task: React.FC<TaskProps> = ({ task, onStatusChange, onDelete, onUpdate })
     };
 
     return (
-        <div className="task" style={{ borderLeftColor: statusColors[task.status] }}>
+        <div className="task" style={{borderLeftColor: statusColors[task.status]}}>
             <div className="task-header">
                 <div className="task-content">
                     <h3>{task.title}</h3>
@@ -81,8 +81,11 @@ const Task: React.FC<TaskProps> = ({ task, onStatusChange, onDelete, onUpdate })
                 <div className="task-actions">
                     <span
                         className="task-status"
-                        style={{ backgroundColor: statusColors[task.status] }}
-                        onClick={() => onStatusChange(task.id, getNextStatus(task.status))}
+                        style={{backgroundColor: statusColors[task.status]}}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onStatusChange(task.id, getNextStatus(task.status));
+                        }}
                         title="Click to change status"
                     >
                         {statusLabels[task.status]}
@@ -141,9 +144,7 @@ const Task: React.FC<TaskProps> = ({ task, onStatusChange, onDelete, onUpdate })
                     {task.createdAt && (
                         <div className="detail-row">
                             <label>Created:</label>
-                            <span className="detail-text">
-                                {new Date(task.createdAt).toLocaleDateString()}
-                            </span>
+                            <span className="detail-text">{new Date(task.createdAt).toLocaleDateString()}</span>
                         </div>
                     )}
                 </div>

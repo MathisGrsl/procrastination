@@ -8,13 +8,14 @@
 
 .app-content {
     display: flex;
+    flex-direction: column;
     flex: 1;
     overflow: hidden;
 }
 
 .app-content > aside {
-    width: 130px;
-    border-right: 2px solid #e0e0e0;
+    width: 100%;
+    border-bottom: 2px solid #e0e0e0;
     flex-shrink: 0;
 }
 

@@ -1,19 +1,20 @@
-import React, { useMemo } from 'react';
-import { Task as TaskType } from '../../types/index';
+import React, {useMemo} from 'react';
+import {Task as TaskType} from '../../types/index';
 import Day from '../Day/Day';
-import { getWeekDays, formatDateKey } from '../../utils/dateUtils';
+import {getWeekDays, formatDateKey} from '../../utils/dateUtils';
 import './ContentDays.css';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 interface ContentDaysProps {
     currentWeekStart: Date;
-    days: { [key: number]: TaskType[] };
+    days: {[key: number]: TaskType[]};
     onAddTask: (dayIndex: number) => void;
     onStatusChange: (taskId: string, status: TaskType['status']) => void;
     onDeleteTask: (taskId: string) => void;
     onUpdateTask: (taskId: string, updates: Partial<TaskType>) => void;
     onDropTask: (taskId: string, dayIndex: number) => void;
+    onDropToNavbar: (taskId: string) => void;
 }
 
 const ContentDays: React.FC<ContentDaysProps> = ({
@@ -24,6 +25,7 @@ const ContentDays: React.FC<ContentDaysProps> = ({
     onDeleteTask,
     onUpdateTask,
     onDropTask,
+    onDropToNavbar,
 }) => {
     const weekDates = useMemo(() => getWeekDays(currentWeekStart), [currentWeekStart]);
 
@@ -48,6 +50,7 @@ const ContentDays: React.FC<ContentDaysProps> = ({
                         onDeleteTask={onDeleteTask}
                         onUpdateTask={onUpdateTask}
                         onDropTask={onDropTask}
+                        onDropToNavbar={onDropToNavbar}
                     />
                 );
             })}
