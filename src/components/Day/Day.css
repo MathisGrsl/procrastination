@@ -1,20 +1,21 @@
 .day {
-    background: #f9f9f9;
+    background: linear-gradient(to bottom, #fafafa 0%, #f5f5f5 100%);
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 16px;
-    height: calc(100vh - 48px);
+    padding: 10px;
+    min-height: 550px;
     flex: 1;
     display: flex;
     flex-direction: column;
     transition: all 0.2s ease;
     overflow-y: auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .day.drag-over {
-    background: #e3f2fd;
+    background: linear-gradient(to bottom, #e3f2fd 0%, #bbdefb 100%);
     border-color: #2196f3;
-    box-shadow: 0 0 10px rgba(33, 150, 243, 0.2);
+    box-shadow: 0 0 10px rgba(33, 150, 243, 0.3);
 }
 
 .day-header {
@@ -22,13 +23,62 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    gap: 8px;
+    flex-wrap: nowrap;
+    min-height: 60px;
 }
 
-.day-header h2 {
+.day-title {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+    min-width: 120px;
+}
+
+.day-title h2 {
     margin: 0;
     font-size: 18px;
     font-weight: 600;
     color: #333;
+    white-space: nowrap;
+}
+
+.day-date {
+    font-size: 12px;
+    color: #999;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.day-stats {
+    display: flex;
+    gap: 6px;
+    font-size: 11px;
+    flex-wrap: nowrap;
+    flex: 1;
+    overflow: hidden;
+}
+
+.day-stat-item {
+    padding: 4px 6px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    font-weight: 600;
+    color: #666;
+    white-space: nowrap;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+
+.day-stat-done {
+    color: #4CAF50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.day-stat-progress {
+    color: #FF9800;
+    background: rgba(255, 152, 0, 0.1);
 }
 
 .day-add-btn {
@@ -45,11 +95,18 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
+    flex-shrink: 0;
+    z-index: 10;
 }
 
 .day-add-btn:hover {
     background: #2196f3;
     color: white;
+    transform: scale(1.1);
+}
+
+.day-add-btn:active {
+    transform: scale(0.95);
 }
 
 .day-tasks {
@@ -58,11 +115,65 @@
     gap: 8px;
     flex: 1;
     overflow-y: auto;
+    padding-right: 4px;
+}
+
+.day-tasks > div {
+    pointer-events: auto;
+}
+
+.task-wrapper {
+    pointer-events: none !important;
+    cursor: grab;
+}
+
+.task-wrapper > * {
+    pointer-events: auto !important;
+}
+
+.day-tasks::-webkit-scrollbar {
+    width: 6px;
+}
+
+.day-tasks::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.day-tasks::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+.day-tasks::-webkit-scrollbar-thumb:hover {
+    background: #999;
 }
 
 .day-empty {
     text-align: center;
-    color: #999;
+    color: #ccc;
     font-style: italic;
-    margin: 20px 0;
+    margin: auto;
+    font-size: 14px;
 }
+
+@media (max-width: 1200px) {
+    .day {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .day {
+        min-height: 200px;
+        padding: 12px;
+    }
+
+    .day-title h2 {
+        font-size: 16px;
+    }
+
+    .day-header {
+        margin-bottom: 12px;
+    }
+}
+

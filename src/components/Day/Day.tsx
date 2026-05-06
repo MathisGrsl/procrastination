@@ -1,19 +1,31 @@
-import React, {useState} from 'react';
-import {Task as TaskType} from '../../types/index';
+import React, { useState } from 'react';
+import { Task as TaskType } from '../../types/index';
 import Task from '../Task/Task';
 import './Day.css';
 
 interface DayProps {
-    dayId: number;
+    dayIndex: number;
     dayName: string;
+    dayDate: string;
     tasks: TaskType[];
-    onAddTask: (dayId: number) => void;
+    onAddTask: (dayIndex: number) => void;
     onStatusChange: (taskId: string, status: TaskType['status']) => void;
     onDeleteTask: (taskId: string) => void;
-    onDropTask: (taskId: string, dayId: number) => void;
+    onUpdateTask: (taskId: string, updates: Partial<TaskType>) => void;
+    onDropTask: (taskId: string, dayIndex: number) => void;
 }
 
-const Day: React.FC<DayProps> = ({dayId, dayName, tasks, onAddTask, onStatusChange, onDeleteTask, onDropTask}) => {
+const Day: React.FC<DayProps> = ({
+    dayIndex,
+    dayName,
+    dayDate,
+    tasks,
+    onAddTask,
+    onStatusChange,
+    onDeleteTask,
+    onUpdateTask,
+    onDropTask,
+}) => {
     const [dragOver, setDragOver] = useState(false);
 
     const handleDragOver = (e: React.DragEvent) => {
@@ -30,9 +42,13 @@ const Day: React.FC<DayProps> = ({dayId, dayName, tasks, onAddTask, onStatusChan
         setDragOver(false);
         const taskId = e.dataTransfer.getData('taskId');
         if (taskId) {
-            onDropTask(taskId, dayId);
+            onDropTask(taskId, dayIndex);
         }
     };
+
+    // Statistics for this day
+    const completedCount = tasks.filter(t => t.status === 'finish').length;
+    const inProgressCount = tasks.filter(t => t.status === 'working').length;
 
     return (
         <section
@@ -42,8 +58,30 @@ const Day: React.FC<DayProps> = ({dayId, dayName, tasks, onAddTask, onStatusChan
             onDrop={handleDrop}
         >
             <div className="day-header">
-                <h2>{dayName}</h2>
-                <button className="day-add-btn" onClick={() => onAddTask(dayId)} title="Add a task">
+                <div className="day-title">
+                    <h2>{dayName}</h2>
+                    <span className="day-date">{dayDate}</span>
+                </div>
+                <div className="day-stats">
+                    {tasks.length > 0 && (
+                        <>
+                            <span className="day-stat-item" title="Total tasks">
+                                📋 {tasks.length}
+                            </span>
+                            {completedCount > 0 && (
+                                <span className="day-stat-item day-stat-done" title="Completed">
+                                    ✓ {completedCount}
+                                </span>
+                            )}
+                            {inProgressCount > 0 && (
+                                <span className="day-stat-item day-stat-progress" title="In progress">
+                                    ⟳ {inProgressCount}
+                                </span>
+                            )}
+                        </>
+                    )}
+                </div>
+                <button className="day-add-btn" onClick={() => onAddTask(dayIndex)} title="Add a task">
                     +
                 </button>
             </div>
@@ -52,8 +90,21 @@ const Day: React.FC<DayProps> = ({dayId, dayName, tasks, onAddTask, onStatusChan
                     <p className="day-empty">No tasks</p>
                 ) : (
                     tasks.map((task) => (
-                        <div key={task.id} draggable onDragStart={(e) => e.dataTransfer?.setData('taskId', task.id)}>
-                            <Task task={task} onStatusChange={onStatusChange} onDelete={onDeleteTask} />
+                        <div
+                            key={task.id}
+                            draggable
+                            className="task-wrapper"
+                            onDragStart={(e) => {
+                                e.dataTransfer?.setData('taskId', task.id);
+                                e.dataTransfer!.effectAllowed = 'move';
+                            }}
+                        >
+                            <Task
+                                task={task}
+                                onStatusChange={onStatusChange}
+                                onDelete={onDeleteTask}
+                                onUpdate={onUpdateTask}
+                            />
                         </div>
                     ))
                 )}

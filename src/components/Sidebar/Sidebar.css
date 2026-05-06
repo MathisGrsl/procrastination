@@ -1,31 +1,32 @@
 .sidebar {
-    width: 300px;
-    background: #fff;
+    width: 130px;
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
     border-right: 2px solid #e0e0e0;
-    padding: 16px;
+    padding: 6px;
     display: flex;
     flex-direction: column;
     max-height: 100vh;
     overflow-y: auto;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .sidebar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
 }
 
 .sidebar-header h2 {
     margin: 0;
-    font-size: 16px;
+    font-size: 11px;
     font-weight: 600;
     color: #333;
 }
 
 .sidebar-add-btn {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     border: 2px solid #ff9800;
     background: white;
@@ -42,20 +43,27 @@
 .sidebar-add-btn:hover {
     background: #ff9800;
     color: white;
+    transform: scale(1.1);
 }
 
 .sidebar-input-container {
     display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+    padding: 8px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
 }
 
 .sidebar-input {
     flex: 1;
-    padding: 8px;
+    padding: 6px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 12px;
+    font-family: inherit;
 }
 
 .sidebar-input:focus {
@@ -64,9 +72,42 @@
     box-shadow: 0 0 4px rgba(255, 152, 0, 0.2);
 }
 
+.sidebar-selectors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.selector-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.selector-group label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.sidebar-select {
+    padding: 5px 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: inherit;
+    background: white;
+    cursor: pointer;
+}
+
+.sidebar-select:focus {
+    outline: none;
+    border-color: #ff9800;
+}
+
 .sidebar-confirm-btn {
-    width: 32px;
-    height: 32px;
+    padding: 6px 12px;
     border: 1px solid #ddd;
     background: #ff9800;
     color: white;
@@ -74,10 +115,12 @@
     cursor: pointer;
     font-weight: bold;
     transition: all 0.2s ease;
+    margin-top: 4px;
 }
 
 .sidebar-confirm-btn:hover {
     background: #f57c00;
+    transform: translateY(-2px);
 }
 
 .sidebar-tasks {
@@ -95,3 +138,14 @@
     margin: 20px 0;
     font-size: 14px;
 }
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        max-height: auto;
+        border-right: none;
+        border-bottom: 2px solid #e0e0e0;
+        max-height: 200px;
+    }
+}
+
